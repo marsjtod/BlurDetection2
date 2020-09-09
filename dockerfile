@@ -5,8 +5,10 @@
 #run
 # python process.py -i ~/workspace/test/deblur-test/ -s results.json
 
+# 1. OS
 FROM ubuntu:18.04
 
+# 2. basic, gl
 # Setup build environment for libpam
 RUN apt-get update -y
 
@@ -18,6 +20,7 @@ RUN apt-get install -y wget bzip2
 # GL for image view
 RUN apt install libgl1-mesa-glx
 
+# 3. pip
 ## python3, pip isntallation
 ARG _PY_SUFFIX=3
 ARG PYTHON=python${_PY_SUFFIX}
@@ -34,6 +37,7 @@ RUN ${PIP} --no-cache-dir install --upgrade \
     pip \
     setuptools
 
+# 4. env
 # Some TF tools expect a "python" binary
 RUN ln -s $(which ${PYTHON}) /usr/local/bin/python 
 
@@ -43,4 +47,5 @@ RUN ln -s $(which ${PYTHON}) /usr/local/bin/python
 # RUN python get-pip.py 
 # RUN apt-get install -y python-pip python-dev 
 
+# 5. pip modules
 RUN pip install numpy opencv-python
